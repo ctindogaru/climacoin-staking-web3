@@ -6,8 +6,10 @@ module.exports = {
     filename: 'index.bundle.js',
   },
   devServer: {
+    static: {
+      watch: true,
+    },
     port: 3010,
-    watchContentBase: true,
   },
   module: {
     rules: [
