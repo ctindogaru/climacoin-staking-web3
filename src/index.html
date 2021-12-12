@@ -1,306 +1,583 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<title>Login V2</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="favicon.ico"/>
-<!--===============================================================================================-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-<!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="main.css">
+  <head>
+    <title>Login V2</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="favicon.ico" />
+    <!--===============================================================================================-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="main.css" />
     <title>CLC Staking</title>
-<!--===============================================================================================-->
-</head>
+    <!--===============================================================================================-->
+  </head>
 
-<body>
-      <nav style="padding: 10px; border: none;" class="metal-container navbar navbar-expand-md nav-extrapadding navbar-light">
-        <div class="container" style="padding: 0; max-width: 100%">
-          <span class="navbar-brand abs"><img class="logo_img" src="climacoin-logo.png" style="max-width:65px;" alt="Logo"></span>
-            <button style="margin-left:18px;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-          <div style="z-index:20" class="collapse navbar-collapse" id="navbarNav">
-            <div class="navbar-nav me-auto mb-2 mb-lg-0">
-              <!-- <span class="nav-item">
+  <body>
+    <nav
+      style="padding: 10px; border: none"
+      class="metal-container navbar navbar-expand-md nav-extrapadding navbar-light"
+    >
+      <div class="container" style="padding: 0; max-width: 100%">
+        <span class="navbar-brand abs"
+          ><img
+            class="logo_img"
+            src="climacoin-logo.png"
+            style="max-width: 65px"
+            alt="Logo"
+        /></span>
+        <button
+          style="margin-left: 18px"
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          style="z-index: 20"
+          class="collapse navbar-collapse"
+          id="navbarNav"
+        >
+          <div class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- <span class="nav-item">
                 <span class="nav-link" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">TRANSACTIONS</span>
               </span> -->
-              <span class="nav-item">
-                <span class="nav-link">STAKING OPTIONS</span>
+            <span class="nav-item">
+              <span class="nav-link">STAKING OPTIONS</span>
+            </span>
+          </div>
+          <span
+            class="navbar-text logged-out"
+            style="display: none; cursor: pointer"
+            data-toggle="modal"
+            data-target="#provider-modal"
+          >
+            <span style="color: white; padding-left: 10px; padding-right: 10px"
+              >CONNECT 🔗</span
+            >
+          </span>
+          <span
+            data-toggle="modal"
+            data-target="#logoutmodal"
+            class="navbar-text logged-in"
+            style="display: none; cursor: pointer; border-radius: 12px"
+          >
+            <div class="balance-panel"></div>
+            <div class="connected-panel">
+              <span
+                style="font-size: 16px; vertical-align: middle"
+                class="material-icons text-primary error-red-text"
+              >
               </span>
+              <span class="white-text net-text" style="font-weight: 300"></span>
             </div>
-            <span class="navbar-text logged-out" style="display: none;cursor:pointer;" data-toggle="modal" data-target="#provider-modal">
-              <span style="color:white;padding-left:10px;padding-right:10px;" >CONNECT 🔗</span>
-            </span>
-            <span data-toggle="modal" data-target="#logoutmodal" class="navbar-text logged-in" style="display:none;cursor: pointer; border-radius: 12px;">
-              
-                <div class="balance-panel"></div>
-                <div class="connected-panel">
-                  <span style="font-size: 16px;vertical-align: middle;" class="material-icons text-primary error-red-text">
-                    
-                  </span> <span class="white-text net-text" style="font-weight:300;"></span>
-                </div>
-                <div class="address-panel"></div>                
-              
-            </span>
-          </div>
+            <div class="address-panel"></div>
+          </span>
         </div>
-      </nav>
+      </div>
+    </nav>
 
-      <div class="content-extrapadding">
+    <div class="content-extrapadding">
+      <div class="row col-xs-12" style="margin: 0px">
+        <div class="col-md-4" style="padding-left: 25px">
+          <div class="col-md-12 metal-container" style="padding-top: 36px">
+            <img
+              class="logo_img"
+              style="
+                max-width: 100%;
+                width: 180px;
+                margin: -20px auto 10px;
+                display: block;
+              "
+              src="climacoin-logo.png"
+              style="max-width: 150px"
+              alt="Logo"
+            />
 
-      <div class="row col-xs-12" style="margin:0px;">
-        <div class="col-md-4" style="padding-left: 25px;">
-        <div class="col-md-12 metal-container" style="padding-top: 36px;">
-          <img class="logo_img" style="max-width:100%; width:180px; margin: -20px auto 10px; display: block;" src="climacoin-logo.png" style="max-width:150px;" alt="Logo">
-                
-                  
-          <div class="wrap-input100 validate-input" data-validate = "Invalid Amount">
-            <input class="input100" type="text" name="amount">
-            <span class="focus-input100 amount" data-placeholder="Stake Amount"></span>
-          </div>
-          <div style="margin-top: -30px;margin-bottom: 30px;">
-            <a href="#" style="display:none;text-decoration: none;" class="max-amount-tokens">
-              <span style="font-size:9px;color:#ff004c9e;letter-spacing: 0.5px;font-weight: 700;font-family: 'Product Sans';">
-                Max: <span class="max-amount-tokens-text"></span> <span class="token-name"></span>
-              </span>
-            </a>
-          </div>
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Invalid Amount"
+            >
+              <input class="input100" type="text" name="amount" />
+              <span
+                class="focus-input100 amount"
+                data-placeholder="Stake Amount"
+              ></span>
+            </div>
+            <div style="margin-top: -30px; margin-bottom: 30px">
+              <a
+                href="#"
+                style="display: none; text-decoration: none"
+                class="max-amount-tokens"
+              >
+                <span
+                  style="
+                    font-size: 9px;
+                    color: #ff004c9e;
+                    letter-spacing: 0.5px;
+                    font-weight: 700;
+                    font-family: 'Product Sans';
+                  "
+                >
+                  Max: <span class="max-amount-tokens-text"></span>
+                  <span class="token-name"></span>
+                </span>
+              </a>
+            </div>
 
-          <div class="wrap-input100 validate-input" data-validate = "Invalid Package">
-            <select class="input100 select-package" type="text" id="package types" name="select-package">
-              <option></option>
-            </select>
-            <span class="focus-input100" data-placeholder="Staking Package"></span>
-          </div>  
+            <div
+              class="wrap-input100 validate-input"
+              data-validate="Invalid Package"
+            >
+              <select
+                class="input100 select-package"
+                type="text"
+                id="package types"
+                name="select-package"
+              >
+                <option></option>
+              </select>
+              <span
+                class="focus-input100"
+                data-placeholder="Staking Package"
+              ></span>
+            </div>
 
-
-            <div class="container-login100-form-btn" style="padding-bottom: 20px;">
+            <div
+              class="container-login100-form-btn"
+              style="padding-bottom: 20px"
+            >
               <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
                 <button class="login100-form-btn stake-button">
-                  <span id="stake-button-text">Choose Provider</span><div class="loader-5" style="display: none;"></div>
+                  <span id="stake-button-text">Choose Provider</span>
+                  <div class="loader-5" style="display: none"></div>
                 </button>
               </div>
             </div>
+          </div>
 
-        </div>
-
-        <div class="col-md-12 metal-container" style="margin-top: 14px; padding-top:16px; padding-bottom: 16px;">
-                <img src="diamond.png"  class="diamond-icon" />
-                <div>
-                  <div class="row" style="margin-top: 10%; margin-bottom: 2%;">
-                      <div class="col-7" style="font-size:15px;">Total staked tokens</div>
-                      <div class="col-5" style="font-size: 16px; font-weight: 500;"><span  class="general-currently-staked-balance"> 0 CLC</span></div>    
-                  </div>
-                  <div class="row" style="margin-bottom:2%;">
-                      <div class="col-7" style="font-size:15px;">Accumulated Interest</div>
-                      <div class="col-5" style="font-size: 16px; font-weight: 500;" ><span class="general-interest"> 0 CLC</span></div>    
-                  </div>
-                  <div class="row" style="margin-bottom:2%;">
-                    <div class="col-7" style="font-size:15px;">All time staked</div>
-                    <div class="col-5" style="font-size: 16px; font-weight: 500;" ><span class="general-staked-balance"> 0 CLC</span></div>    
+          <div
+            class="col-md-12 metal-container"
+            style="margin-top: 14px; padding-top: 16px; padding-bottom: 16px"
+          >
+            <img src="diamond.png" class="diamond-icon" />
+            <div>
+              <div class="row" style="margin-top: 10%; margin-bottom: 2%">
+                <div class="col-7" style="font-size: 15px">
+                  Total staked tokens
                 </div>
-                  <div class="row" style="margin-bottom:2%;">
-                      <div class="col-7" style="font-size:15px;">Historical Rewards</div>
-                      <div class="col-5" style="font-size: 16px; font-weight: 500;"><span class="general-historical-rewards"> 0 CLC</span></div>    
-                  </div>
-                  <div class="row" style="margin-bottom:2%;">
-                      <div class="col-7" style="font-size:15px;">Best deal</div>
-                      <div class="col-5" style="font-size:16px;font-weight: 500;color:#ff004c9e" ><span class="general-best-deal"></span></div>    
-                  </div>
-                  <div class="row" style="margin-bottom:2%;">
-                      <div class="col-7" style="font-size:15px;">Best Deal Reward</div>
-                      <div class="col-5" style="font-size:16px;font-weight: 500;color:#ff004c9e"><span class="general-best-deal-reward"></span></div>    
-                  </div>
-                  <!-- <p class="text-center" style="font-size: 16px; margin-top:50px; font-weight: 500; padding-bottom: 20px;">0 months 20 days 2 hours to maturity</p> -->
+                <div class="col-5" style="font-size: 16px; font-weight: 500">
+                  <span class="general-currently-staked-balance"> 0 CLC</span>
                 </div>
               </div>
-        </div>
-        <div style="padding-right: 25px;" class="mobile-panel-stakes col-md-8">
-        <div class="row col-xs-12">
-            <div class="col-md-12">
-              <div class="col-md-12 col-xs-12 col-header-set-height metal-container" style="padding-top:10px;">
-              My active Stakes
-              <svg style="float:right;cursor:pointer;" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-arrow-repeat refresh-active-stakes" viewBox="0 0 16 16">
-  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-</svg>
-             </div>
-             </div>
-            <div class="col-md-12">
-              <div class="col-md-12 col-xs-12 col-set-height metal-container" style="margin-top:11px; font-size: 75%"> 
-                <div class="row col-xs-12" style="border-bottom: 3px solid; padding-top: 10px; padding-bottom: 10px;">
-                  <div class="row col-md-6">
-                  <div class="col-md-4">Start</div>
-                  <div class="col-md-4">End</div>
-                  <div class="col-md-2">Staked ID</div>
-                  <div class="col-md-2">Staked Amount</div>
+              <div class="row" style="margin-bottom: 2%">
+                <div class="col-7" style="font-size: 15px">
+                  Accumulated Interest
                 </div>
-                <div class="row col-md-6">
-                  <div class="col-md-3">Stake Reward</div>
-                  <div class="col-md-3">Interest</div>
-                  <div class="col-md-3">Current Val.</div>
-                  <div class="col-md-3">Action</div>
+                <div class="col-5" style="font-size: 16px; font-weight: 500">
+                  <span class="general-interest"> 0 CLC</span>
                 </div>
               </div>
-            
-             <div class="active-stakes">
-              
-              
-             </div>
-             
-             </div>
-             </div>
-
-
-             <div class="col-md-12">
-              <div class="col-md-12 col-xs-12 col-header-set-height metal-container" style="margin-top:14px; padding-top:10px">
-              My Stakes History
-              <svg style="float:right;cursor:pointer;" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-arrow-repeat refresh-history-stakes" viewBox="0 0 16 16">
-  <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-</svg>
-             </div>
-             </div>
-             
-             <div class="col-xs-12">
-             <div class="col-md-12">
-              
-              <div class="col-md-12 col-xs-12 col-set-height metal-container" style="margin-top:11px; font-size: 75%"> 
-                <div class="row col-xs-12" style="border-bottom: 3px solid; padding-top: 10px; padding-bottom: 10px;">
-                  <div class="row col-md-6">
-                  <div class="col-md-4">Start</div>
-                  <div class="col-md-4">End</div>
-                  <div class="col-md-2">Staked ID</div>
-                  <div class="col-md-2">Initial Amount</div>
-                </div>
-                <div class="row col-md-6">
-                  <div class="col-md-3">Stake Reward</div>
-                  <div class="col-md-3">Interest</div>
-                  <div class="col-md-3">Unstaked Val.</div>
-                  <div class="col-md-3">Action</div>
+              <div class="row" style="margin-bottom: 2%">
+                <div class="col-7" style="font-size: 15px">All time staked</div>
+                <div class="col-5" style="font-size: 16px; font-weight: 500">
+                  <span class="general-staked-balance"> 0 CLC</span>
                 </div>
               </div>
-
-              <div class="history-stakes"></div>
-
-             </div>
-             </div>
-
-        </div>
-      
-      </div>
-
-
-
-      <!-- Connect Modal -->
-
-      <div class="modal fade" id="provider-modal" tabindex="-1" role="dialog" aria-labelledby="provider-modal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Connect</h5>
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">✖️</button>
-                <!-- <span aria-hidden="true">&times;</span> -->
-            </div>
-            <div class="modal-body">
-                <a href="#" class="log-metamask" data-dismiss="modal"><img style="width:40px;"  src="metamask-icon.png"/> Connect metamask</a>
-                <br/>
-                <a href="#" class="log-walletconnect" data-dismiss="modal"><img style="width:40px;"  src="walletconnect-icon.png" />  Wallet Connect</a>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background:#1a2848;">close?</button>
+              <div class="row" style="margin-bottom: 2%">
+                <div class="col-7" style="font-size: 15px">
+                  Historical Rewards
+                </div>
+                <div class="col-5" style="font-size: 16px; font-weight: 500">
+                  <span class="general-historical-rewards"> 0 CLC</span>
+                </div>
+              </div>
+              <div class="row" style="margin-bottom: 2%">
+                <div class="col-7" style="font-size: 15px">Best deal</div>
+                <div
+                  class="col-5"
+                  style="font-size: 16px; font-weight: 500; color: #ff004c9e"
+                >
+                  <span class="general-best-deal"></span>
+                </div>
+              </div>
+              <div class="row" style="margin-bottom: 2%">
+                <div class="col-7" style="font-size: 15px">
+                  Best Deal Reward
+                </div>
+                <div
+                  class="col-5"
+                  style="font-size: 16px; font-weight: 500; color: #ff004c9e"
+                >
+                  <span class="general-best-deal-reward"></span>
+                </div>
+              </div>
+              <!-- <p class="text-center" style="font-size: 16px; margin-top:50px; font-weight: 500; padding-bottom: 20px;">0 months 20 days 2 hours to maturity</p> -->
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Transactions modal -->
-
-      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Transactions</h5>
-              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">✖️</button>
+        <div style="padding-right: 25px" class="mobile-panel-stakes col-md-8">
+          <div class="row col-xs-12">
+            <div class="col-md-12">
+              <div
+                class="col-md-12 col-xs-12 col-header-set-height metal-container"
+                style="padding-top: 10px"
+              >
+                My active Stakes
+                <svg
+                  style="float: right; cursor: pointer"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  fill="currentColor"
+                  class="bi bi-arrow-repeat refresh-active-stakes"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
+                  />
+                </svg>
+              </div>
             </div>
-            <div class="modal-body">
-                <div class="row" style="margin-bottom:2%;">
+            <div class="col-md-12">
+              <div
+                class="col-md-12 col-xs-12 col-set-height metal-container"
+                style="margin-top: 11px; font-size: 75%"
+              >
+                <div
+                  class="row col-xs-12"
+                  style="
+                    border-bottom: 3px solid;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                  "
+                >
+                  <div class="row col-md-6">
+                    <div class="col-md-4">Start</div>
+                    <div class="col-md-4">End</div>
+                    <div class="col-md-2">Staked ID</div>
+                    <div class="col-md-2">Staked Amount</div>
+                  </div>
+                  <div class="row col-md-6">
+                    <div class="col-md-3">Stake Reward</div>
+                    <div class="col-md-3">Interest</div>
+                    <div class="col-md-3">Current Val.</div>
+                    <div class="col-md-3">Action</div>
+                  </div>
+                </div>
+
+                <div class="active-stakes"></div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div
+                class="col-md-12 col-xs-12 col-header-set-height metal-container"
+                style="margin-top: 14px; padding-top: 10px"
+              >
+                My Stakes History
+                <svg
+                  style="float: right; cursor: pointer"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  fill="currentColor"
+                  class="bi bi-arrow-repeat refresh-history-stakes"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="col-md-12">
+                <div
+                  class="col-md-12 col-xs-12 col-set-height metal-container"
+                  style="margin-top: 11px; font-size: 75%"
+                >
+                  <div
+                    class="row col-xs-12"
+                    style="
+                      border-bottom: 3px solid;
+                      padding-top: 10px;
+                      padding-bottom: 10px;
+                    "
+                  >
+                    <div class="row col-md-6">
+                      <div class="col-md-4">Start</div>
+                      <div class="col-md-4">End</div>
+                      <div class="col-md-2">Staked ID</div>
+                      <div class="col-md-2">Initial Amount</div>
+                    </div>
+                    <div class="row col-md-6">
+                      <div class="col-md-3">Stake Reward</div>
+                      <div class="col-md-3">Interest</div>
+                      <div class="col-md-3">Unstaked Val.</div>
+                      <div class="col-md-3">Action</div>
+                    </div>
+                  </div>
+
+                  <div class="history-stakes"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Connect Modal -->
+
+          <div
+            class="modal fade"
+            id="provider-modal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="provider-modal"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Connect</h5>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    data-dismiss="modal"
+                  >
+                    ✖️
+                  </button>
+                  <!-- <span aria-hidden="true">&times;</span> -->
+                </div>
+                <div class="modal-body">
+                  <a href="#" class="log-metamask" data-dismiss="modal"
+                    ><img style="width: 40px" src="metamask-icon.png" /> Connect
+                    metamask</a
+                  >
+                  <br />
+                  <a href="#" class="log-walletconnect" data-dismiss="modal"
+                    ><img style="width: 40px" src="walletconnect-icon.png" />
+                    Wallet Connect</a
+                  >
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                    style="background: #1a2848"
+                  >
+                    close?
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transactions modal -->
+
+          <div
+            class="modal fade"
+            id="exampleModalLong"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLongTitle"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">
+                    Transactions
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    data-dismiss="modal"
+                  >
+                    ✖️
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="row" style="margin-bottom: 2%">
                     <div class="col-8">Transaction 1</div>
-                    <div class="col-4" style="font-size: 24px; font-weight: 500;"> 0 CLC</div>    
-                </div>
-                <div class="row" style="margin-bottom:2%;">
+                    <div
+                      class="col-4"
+                      style="font-size: 24px; font-weight: 500"
+                    >
+                      0 CLC
+                    </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 2%">
                     <div class="col-8">Transaction 2</div>
-                    <div class="col-4" style="font-size: 24px; font-weight: 500;"> 0 CLC</div>    
-                </div>
-                <div class="row" style="margin-bottom:2%;">
+                    <div
+                      class="col-4"
+                      style="font-size: 24px; font-weight: 500"
+                    >
+                      0 CLC
+                    </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 2%">
                     <div class="col-8">Transaction 3</div>
-                    <div class="col-4" style="font-size: 24px; font-weight: 500;"> 0 CLC</div>    
+                    <div
+                      class="col-4"
+                      style="font-size: 24px; font-weight: 500"
+                    >
+                      0 CLC
+                    </div>
+                  </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Or close here?</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal fade" id="logoutmodal" tabindex="-1" role="dialog" aria-labelledby="logoutModalTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="logoutModalTitle">Provider</h5>
-              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">✖️</button>
-            </div>
-            <div class="modal-body">
-              Would you like to log out your provider?<br>
-              Logged in as: <span class="address-full"></span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-secondary logout-provider" data-dismiss="modal">Log Out</button>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Or close here?
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="modal fade" id="unstake-modal" tabindex="-1" role="dialog" aria-labelledby="unstake-modal-title" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="unstake-modal-title">Unstake</h5>
-              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">✖️</button>
-            </div>
-            <div class="modal-body">
-              Are you sure you want to unstake?<br>
-              <br/>
-              Received Reward: <span class="info-stake-reward"></span> <span class="info-stake-token"></span>
-              <br/>
-              Received Principal: <span class="info-stake-amount"></span> <span class="info-stake-token"></span>
-              <br/>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>     
-                <button type="button" class="btn btn-secondary unstake-agree" data-dismiss="modal">Yes</button>              
+          <div
+            class="modal fade"
+            id="logoutmodal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="logoutModalTitle"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="logoutModalTitle">Provider</h5>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    data-dismiss="modal"
+                  >
+                    ✖️
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Would you like to log out your provider?<br />
+                  Logged in as: <span class="address-full"></span>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary logout-provider"
+                    data-dismiss="modal"
+                  >
+                    Log Out
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+
+          <div
+            class="modal fade"
+            id="unstake-modal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="unstake-modal-title"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="unstake-modal-title">Unstake</h5>
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    data-dismiss="modal"
+                  >
+                    ✖️
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you want to unstake?<br />
+                  <br />
+                  Received Reward: <span class="info-stake-reward"></span>
+                  <span class="info-stake-token"></span>
+                  <br />
+                  Received Principal: <span class="info-stake-amount"></span>
+                  <span class="info-stake-token"></span>
+                  <br />
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    No
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary unstake-agree"
+                    data-dismiss="modal"
+                  >
+                    Yes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"
+            integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
+            crossorigin="anonymous"
+            async
+          ></script>
+
+          <div id="dropDownSelect1"></div>
+
+          <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+            integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+            crossorigin="anonymous"
+          ></script>
+          <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"
+            integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
+            crossorigin="anonymous"
+            async
+          ></script>
+
+          <script src="index.bundle.js"></script>
         </div>
       </div>
-
-
-    
-        
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
-  
-	<div id="dropDownSelect1"></div>
-	
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
-      
-	<script src="index.bundle.js"></script>
-
-</body>
+    </div>
+  </body>
 </html>
