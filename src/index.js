@@ -1,10 +1,17 @@
-require('file-loader?name=[name].[ext]!./index.html');
+require('file-loader?name=[name].html!./index.html');
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { App } from './App';
+// import css files
 import './App.scss';
+import './css/base.css';
+import './css/style.css';
+import './css/util.css';
 
-const appElement = document.getElementById('app');
+// import image files
+import './images/icons/favicon.ico';
+import './images/diamond.png';
+import './images/metamask-icon.png';
+import './images/walletconnect-icon.png';
 
-ReactDOM.render(<App/>, appElement);
+// import js files
+import './App.js';
+import './assets/web3.js';

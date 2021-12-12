@@ -1,0 +1,111 @@
+body {
+    background: #121b33;
+    margin: 0;
+
+}
+
+.nav-extrapadding {
+    padding-top: 20px;
+    background-color: rgb(250, 249, 248);
+    padding-bottom: 20px;
+}
+
+.content-extrapadding {
+    padding-top: 25px;
+}
+
+.col-set-height {
+    min-height: 340px;
+}
+
+.col-header-set-height {
+    min-height: 50px;
+}
+
+.metal-container {
+    border-radius: 5px;
+    padding-left: 25px;
+    padding-right: 25px;
+    position: relative;
+    box-sizing: border-box;
+    color: #d0deffcc;
+    /* background-clip: padding-box; */
+    background-color: #1a2848;
+    border: solid 2px transparent !important;
+}
+
+.metal-container p {
+    color: #d0deffcc;
+}
+
+.diamond-icon {
+    display: none;
+}
+
+.metal-container::before {
+    transition: inherit;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -2px;
+    /* !importanté */
+    border-radius: inherit;
+    /* !importanté */
+    background: linear-gradient(135deg, #000, #ff004c, #000, #ff004c, #000);
+}
+
+
+
+body.diamond .diamond-icon {
+    /* position: absolute;
+    top: -17px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    width: 50px; */
+}
+
+.nav-link {
+    color: #d0deffcc !important;
+}
+
+@media (min-width: 768px) {
+    .navbar-brand.abs {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        text-align: center;
+    }
+
+    body nav.navbar {
+        padding: 10px;
+        border: none;
+        border: solid 2px transparent !important;
+        margin: 0px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        padding-left: 80px !important;
+        padding-right: 80px !important;
+        position: fixed;
+        width: 100%;
+        margin-left: 0%;
+        position: relative;
+        box-sizing: border-box;
+        /* background-clip: padding-box; */
+        border-top-right-radius: 0px !important;
+        border-top-left-radius: 0px !important;
+    }
+
+    body.diamond nav {}
+
+    .nav-item {
+        margin-left: 50px;
+    }
+
+
+
+}
