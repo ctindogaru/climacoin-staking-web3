@@ -19,15 +19,13 @@ var w3;
 var loggedProvider;
 var user={};
 var network;
-var stakingContract;
 var w3sender;
 var loggedProvider=null;
 var stakes=[];
 var stakePackages={};
-var tokenContractAddress;
-var cliqContractAddress;
+var stakingContract;
+var nativeTokenContractAddress;
 var nativeTokenContract;
-var cliqContract;
 var packageLength;
 var stakesLength;
 
@@ -142,12 +140,8 @@ async function setStakeInterface(){
 async function web3Loaded(){
     
     stakingContract=new w3sender.eth.Contract(tokenStakingAbi.abi, tokenStakingAbi.address);
-
-    tokenContractAddress = await stakingContract.methods.tokenContract().call();
-    cliqContractAddress = await stakingContract.methods.CLIQ().call();
-
-    nativeTokenContract=new w3sender.eth.Contract(ierc20Abi.abi, tokenContractAddress);
-    cliqContract=new w3sender.eth.Contract(ierc20Abi.abi, cliqContractAddress);
+    nativeTokenContractAddress = await stakingContract.methods.tokenContract().call();
+    nativeTokenContract=new w3sender.eth.Contract(ierc20Abi.abi, nativeTokenContractAddress);
 
     updateInterface();
 
