@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "webpack serve --mode development",
     "build": "webpack --mode production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --write 'src/App.js' && prettier --write 'src/index.js'"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +37,7 @@
     "https-browserify": "^1.0.0",
     "mini-css-extract-plugin": "^2.4.5",
     "os-browserify": "^0.3.0",
+    "prettier": "^2.5.1",
     "sass": "^1.44.0",
     "sass-loader": "^12.3.0",
     "stream-browserify": "^3.0.0",
