@@ -6,8 +6,8 @@ import 'regenerator-runtime/runtime'
 import Web3 from 'web3';
 import BigNumber from "bignumber.js";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import deficliqStakingContractData from './stakingContractData/deficliqStakingData.json';
-import iercAbi from './stakingContractData/ierc20Abi.json';
+import tokenStakingAbi from './abis/tokenStakingUpgradeableAbi.json';
+import ierc20Abi from './abis/ierc20UpgradeableAbi.json';
 import { Button } from "bootstrap";
 
 var NATIVE_TOKEN_DECIMALS = 18; //change this
@@ -122,7 +122,7 @@ async function init(){
 
 
 async function setStakeInterface(){
-    var readContract=new w3.eth.Contract(deficliqStakingContractData.abi, deficliqStakingContractData.address);
+    var readContract=new w3.eth.Contract(tokenStakingAbi.abi, tokenStakingAbi.address);
     packageLength = await readContract.methods.packageLength().call();
     
     var html='<option></option>';
@@ -141,13 +141,13 @@ async function setStakeInterface(){
 
 async function web3Loaded(){
     
-    stakingContract=new w3sender.eth.Contract(deficliqStakingContractData.abi, deficliqStakingContractData.address);
+    stakingContract=new w3sender.eth.Contract(tokenStakingAbi.abi, tokenStakingAbi.address);
 
     tokenContractAddress = await stakingContract.methods.tokenContract().call();
     cliqContractAddress = await stakingContract.methods.CLIQ().call();
 
-    nativeTokenContract=new w3sender.eth.Contract(iercAbi.abi, tokenContractAddress);
-    cliqContract=new w3sender.eth.Contract(iercAbi.abi, cliqContractAddress);
+    nativeTokenContract=new w3sender.eth.Contract(ierc20Abi.abi, tokenContractAddress);
+    cliqContract=new w3sender.eth.Contract(ierc20Abi.abi, cliqContractAddress);
 
     updateInterface();
 
@@ -443,7 +443,7 @@ function unstake(stakeId){
     //     from:user.address
     // });
 
-    var transaction=stakingContract.methods.unstake(stakeId).send({
+    var transaction=stakingContract.methods.unstakeTokens(stakeId).send({
         from:user.address
     });
     
@@ -508,7 +508,7 @@ function startTransaction(transaction){
 
 
 function getApproval(){
-    return nativeTokenContract.methods.allowance(user.address,deficliqStakingContractData.address).call();
+    return nativeTokenContract.methods.allowance(user.address,tokenStakingAbi.address).call();
 }
 
 async function stakeChainActions(amount,stakingPackage,type){
@@ -520,7 +520,7 @@ async function stakeChainActions(amount,stakingPackage,type){
         
         
 
-        var transaction = nativeTokenContract.methods.approve(deficliqStakingContractData.address,"115792089237316195423570985008687907853269984665640564039457584007913129639935").send({
+        var transaction = nativeTokenContract.methods.approve(tokenStakingAbi.address,"115792089237316195423570985008687907853269984665640564039457584007913129639935").send({
             from:user.address
         });
 
