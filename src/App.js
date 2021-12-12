@@ -10,9 +10,8 @@ import tokenStakingAbi from './abis/tokenStakingUpgradeableAbi.json';
 import ierc20Abi from './abis/ierc20UpgradeableAbi.json';
 import { Button } from "bootstrap";
 
-var NATIVE_TOKEN_DECIMALS = 18; //change this
-var CLIQ_TOKEN_DECIMALS = 18;
-var NATIVE_TOKEN_NAME = 'CLIQ';
+var NATIVE_TOKEN_DECIMALS = 18;
+var NATIVE_TOKEN_NAME = 'CLC';
 var FALLBACK_CHAIN='0x4';
 
 var w3;
@@ -180,8 +179,6 @@ async function setTokenBalance(){
     
     user.currentlyStakedBalance=user.totalStakedBalance;
     user.totalRewardsToken=0;
-    user.totalRewardsCliq=0;
-    user.historicalRewardsCliq=0;
     user.historicalRewardsToken=0;
     
     for(var sKey in stakes){    
@@ -190,18 +187,10 @@ async function setTokenBalance(){
             return;
         }
         
-        if(stakes[sKey]._stakeRewardType==0){
-            user.historicalRewardsToken+=stakes[sKey].normalizedAccumulatedInterest;
-        }else{
-            user.historicalRewardsCliq+=stakes[sKey].normalizedAccumulatedInterest;
-        }
+        user.historicalRewardsToken+=stakes[sKey].normalizedAccumulatedInterest;
 
         if(stakes[sKey]._withdrawnTimestamp==0){
-            if(stakes[sKey]._stakeRewardType==0){
-                user.totalRewardsToken+=stakes[sKey].normalizedAccumulatedInterest;
-            }else{
-                user.totalRewardsCliq+=stakes[sKey].normalizedAccumulatedInterest;
-            }
+            user.totalRewardsToken+=stakes[sKey].normalizedAccumulatedInterest;
         }
         
           user.totalStakedBalance+=stakes[sKey]._withdrawnTimestamp!=0?stakes[sKey].amountNormalized:0;
@@ -210,8 +199,8 @@ async function setTokenBalance(){
     console.log(user.totalStakedBalance,user.currentlyStakedBalance);
     $('.general-staked-balance').text(user.totalStakedBalance.toFixed(4)+' '+NATIVE_TOKEN_NAME);
     $('.general-currently-staked-balance').text(user.currentlyStakedBalance.toFixed(4)+' '+NATIVE_TOKEN_NAME);
-    $('.general-interest').text(user.totalRewardsToken.toFixed(4)+' '+NATIVE_TOKEN_NAME+(user.totalRewardsCliq>0?' + '+user.totalRewardsCliq.toFixed(4)+' CLIQ':''))
-    $('.general-historical-rewards').text(user.historicalRewardsToken.toFixed(4)+' '+NATIVE_TOKEN_NAME+(user.historicalRewardsCliq>0?' + '+user.historicalRewardsCliq.toFixed(4)+' CLIQ':''));
+    $('.general-interest').text(user.totalRewardsToken.toFixed(4)+' '+NATIVE_TOKEN_NAME)
+    $('.general-historical-rewards').text(user.historicalRewardsToken.toFixed(4)+' '+NATIVE_TOKEN_NAME);
     
     var bpackage=getBestPackage();
     $('.general-best-deal').text(w3.utils.toAscii(bpackage._packageName));
@@ -346,16 +335,11 @@ async function drawStakes(stakes){
         
         
         
-        if(stakes[sKey]._stakeRewardType==0){        
-            var stakeRewardToken = await stakingContract.methods.checkStakeReward(user.address,sKey).call();
-            stakes[sKey].accumulatedInterest = stakeRewardToken.yieldReward;
-        }else{
-            var stakeRewardCliq =  await stakingContract.methods.checkStakeCliqReward(user.address,sKey).call();
-            stakes[sKey].accumulatedInterest = stakeRewardCliq.yieldReward;
-        }
+        var stakeRewardToken = await stakingContract.methods.checkStakeReward(user.address,sKey).call();
+        stakes[sKey].accumulatedInterest = stakeRewardToken.yieldReward;
 
         
-        stakes[sKey].normalizedAccumulatedInterest = parseFloat(fromContractDecimals(stakes[sKey].accumulatedInterest,stakes[sKey]._stakeRewardType==0?NATIVE_TOKEN_DECIMALS:CLIQ_TOKEN_DECIMALS));
+        stakes[sKey].normalizedAccumulatedInterest = parseFloat(fromContractDecimals(stakes[sKey].accumulatedInterest,NATIVE_TOKEN_DECIMALS));
         stakes[sKey].amountNormalized = parseFloat(fromContractDecimals(stakes[sKey]._amount,NATIVE_TOKEN_DECIMALS));
         if(stakes[sKey]._withdrawnTimestamp == 0){
 
@@ -368,9 +352,9 @@ async function drawStakes(stakes){
             <div style="font-size: 85%;white-space:nowrap;" class="col-md-2">${stakes[sKey].amountNormalized.toFixed(4)}</div>
             </div>
             <div class="row col-md-6">
-            <div style="font-size: 85%;" class="col-md-3">${stakes[sKey]._stakeRewardType == 0 ? NATIVE_TOKEN_NAME:'CLIQ'}</div>
+            <div style="font-size: 85%;" class="col-md-3">${NATIVE_TOKEN_NAME}</div>
             <div style="font-size: 85%;" class="col-md-3">${stakePackages[stakes[sKey]._packageName]._packageInterest}%</div>
-            <div style="font-size: 85%;white-space:nowrap;" class="col-md-3">${stakes[sKey]._stakeRewardType == 0 ? parseFloat(stakes[sKey].normalizedAccumulatedInterest + stakes[sKey].amountNormalized).toFixed(4)+ ' ' + NATIVE_TOKEN_NAME: stakes[sKey].amountNormalized + ' '+NATIVE_TOKEN_NAME+' + '+stakes[sKey].normalizedAccumulatedInterest +' CLIQ'}</div>
+            <div style="font-size: 85%;white-space:nowrap;" class="col-md-3">${parseFloat(stakes[sKey].normalizedAccumulatedInterest + stakes[sKey].amountNormalized).toFixed(4)+ ' ' + NATIVE_TOKEN_NAME}</div>
             <div class="col-md-3">
                 <svg xmlns="http://www.w3.org/2000/svg" style="cursor:pointer;margin-right: 8px;" width="22" height="22" fill="currentColor" stake="${sKey}" class="unstake-button bi bi-cash-stack" viewBox="0 0 16 16">
                     <path d="M14 3H1a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1h-1z"/>
@@ -396,9 +380,9 @@ async function drawStakes(stakes){
             <div style="font-size: 85%;white-space:nowrap;" class="col-md-2">${stakes[sKey].amountNormalized.toFixed(4)}</div>
             </div>
             <div class="row col-md-6">
-            <div style="font-size: 85%;" class="col-md-3">${stakes[sKey]._stakeRewardType == 0 ? NATIVE_TOKEN_NAME:'CLIQ'}</div>
+            <div style="font-size: 85%;" class="col-md-3">${NATIVE_TOKEN_NAME}</div>
             <div style="font-size: 85%;" class="col-md-3">${stakePackages[stakes[sKey]._packageName]._packageInterest}%</div>
-            <div style="font-size: 85%;white-space:nowrap;" class="col-md-3">${stakes[sKey]._stakeRewardType == 0 ? parseFloat(stakes[sKey].normalizedAccumulatedInterest + stakes[sKey].amountNormalized).toFixed(4)+ ' ' + NATIVE_TOKEN_NAME: stakes[sKey].amountNormalized + ' '+NATIVE_TOKEN_NAME+' + '+stakes[sKey].normalizedAccumulatedInterest +' CLIQ'}</div>
+            <div style="font-size: 85%;white-space:nowrap;" class="col-md-3">${parseFloat(stakes[sKey].normalizedAccumulatedInterest + stakes[sKey].amountNormalized).toFixed(4)+ ' ' + NATIVE_TOKEN_NAME}</div>
             <div class="col-md-3">
                 <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px;" width="22" height="22" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
                     <path d="M14 3H1a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1h-1z"/>
@@ -660,7 +644,7 @@ var currentStakeId=null;
         currentStakeId = $(this).attr('stake');
         $('.info-stake-reward').text(stakes[currentStakeId].normalizedAccumulatedInterest);
         $('.info-stake-amount').text(stakes[currentStakeId].amountNormalized);
-        $('.info-stake-token').text(stakes[currentStakeId]._stakeRewardType == 0 ? NATIVE_TOKEN_NAME:'CLIQ');
+        $('.info-stake-token').text(NATIVE_TOKEN_NAME);
         $('#unstake-modal').modal('toggle');
     })
 
