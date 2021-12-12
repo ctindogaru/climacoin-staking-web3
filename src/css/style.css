@@ -1,5 +1,5 @@
 body {
-    background: #121b33;
+    background: #22651D;
     margin: 0;
 
 }
@@ -28,14 +28,14 @@ body {
     padding-right: 25px;
     position: relative;
     box-sizing: border-box;
-    color: #d0deffcc;
+    color: #FFFAFA;
     /* background-clip: padding-box; */
-    background-color: #1a2848;
+    background-color: #0A7500;
     border: solid 2px transparent !important;
 }
 
 .metal-container p {
-    color: #d0deffcc;
+    color: #FFFAFA;
 }
 
 .diamond-icon {
@@ -55,7 +55,7 @@ body {
     /* !importanté */
     border-radius: inherit;
     /* !importanté */
-    background: linear-gradient(135deg, #000, #ff004c, #000, #ff004c, #000);
+    background: linear-gradient(135deg, #7A5506, #FDDA01, #7A5506, #FDDA01, #7A5506);
 }
 
 
@@ -70,7 +70,7 @@ body.diamond .diamond-icon {
 }
 
 .nav-link {
-    color: #d0deffcc !important;
+    color: #FFFAFA !important;
 }
 
 @media (min-width: 768px) {
