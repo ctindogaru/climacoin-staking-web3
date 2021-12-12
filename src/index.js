@@ -11,6 +11,7 @@ import "./images/icons/favicon.ico";
 import "./images/diamond.png";
 import "./images/metamask-icon.png";
 import "./images/walletconnect-icon.png";
+import "./images/climacoin-logo.png";
 
 // import js files
 import "./App.js";
