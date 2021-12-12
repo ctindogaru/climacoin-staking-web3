@@ -32,16 +32,16 @@ var packageLength;
 var stakesLength;
 
 const w3Strings= {
-    "0x1":{infuraLink:'https://mainnet.infura.io/v3/2248cba2a9064af5a9ca9a052cc74b45',name:'Mainnet'},
-    "0x3":{infuraLink:'https://ropsten.infura.io/v3/2248cba2a9064af5a9ca9a052cc74b45',name:'Ropsten'},
-    "0x2a":{infuraLink:'https://kovan.infura.io/v3/2248cba2a9064af5a9ca9a052cc74b45',name:'Kovan'},
-    "0x4":{infuraLink:'https://rinkeby.infura.io/v3/2248cba2a9064af5a9ca9a052cc74b45',name:'Rinkeby'},
-    "0x5":{infuraLink:'https://goerli.infura.io/v3/2248cba2a9064af5a9ca9a052cc74b45',name:'Goerli'},
-    "1":{infuraLink:'https://mainnet.infura.io/v3/2248cba2a9064af5a9ca9a052cc74b45',name:'Mainnet'},
-    "3":{infuraLink:'https://ropsten.infura.io/v3/2248cba2a9064af5a9ca9a052cc74b45',name:'Ropsten'},
-    "2a":{infuraLink:'https://kovan.infura.io/v3/2248cba2a9064af5a9ca9a052cc74b45',name:'Kovan'},
-    "4":{infuraLink:'https://rinkeby.infura.io/v3/2248cba2a9064af5a9ca9a052cc74b45',name:'Rinkeby'},
-    "5":{infuraLink:'https://goerli.infura.io/v3/2248cba2a9064af5a9ca9a052cc74b45',name:'Goerli'}
+    "0x1":{alchemyLink:'',name:'Mainnet'},
+    "0x3":{alchemyLink:'',name:'Ropsten'},
+    "0x2a":{alchemyLink:'',name:'Kovan'},
+    "0x4":{alchemyLink:'https://eth-rinkeby.alchemyapi.io/v2/OXYLvOt732PZgLee2mpprVhBdXs-hagV',name:'Rinkeby'},
+    "0x5":{alchemyLink:'https://eth-goerli.alchemyapi.io/v2/rd7h-yzXVEw1K3kk6satHa0rbPii3h7W',name:'Goerli'},
+    "1":{alchemyLink:'',name:'Mainnet'},
+    "3":{alchemyLink:'',name:'Ropsten'},
+    "2a":{alchemyLink:'',name:'Kovan'},
+    "4":{alchemyLink:'https://eth-rinkeby.alchemyapi.io/v2/OXYLvOt732PZgLee2mpprVhBdXs-hagV',name:'Rinkeby'},
+    "5":{alchemyLink:'https://eth-goerli.alchemyapi.io/v2/rd7h-yzXVEw1K3kk6satHa0rbPii3h7W',name:'Goerli'}
 };
 
 
@@ -87,7 +87,7 @@ async function init(){
 
         network=(typeof(ethereum)!='undefined' && ethereum.chainId)?ethereum.chainId:FALLBACK_CHAIN;
 
-        w3= await new Web3(w3Strings[network].infuraLink);
+        w3= await new Web3(w3Strings[network].alchemyLink);
 
         setStakeInterface();
 
@@ -247,7 +247,7 @@ function setProviderEvents(provider){
       
     provider.on('chainChanged', function (networkId) {
         console.log('network changed',networkId);
-        w3= new Web3(w3Strings[networkId].infuraLink);
+        w3= new Web3(w3Strings[networkId].alchemyLink);
         loginWeb3(provider);   
     });
 
@@ -535,7 +535,7 @@ async function stakeChainActions(amount,stakingPackage,type){
 
 function stakeTokens(amount,stakingPackage,type){
 
-    var tr=stakingContract.methods.stakeTokens(toContractDecimals(amount,NATIVE_TOKEN_DECIMALS),stakingPackage,type).send({
+    var tr=stakingContract.methods.stakeTokens(toContractDecimals(amount,NATIVE_TOKEN_DECIMALS),stakingPackage).send({
         from:user.address
     });
 
@@ -603,7 +603,7 @@ function loginWeb3(provider){
 
     if(user.address && network){
         console.log(network);
-        w3= new Web3(w3Strings[network].infuraLink);
+        w3= new Web3(w3Strings[network].alchemyLink);
 
         w3.eth.getBalance(user.address, async (err, balance) => {                    
             user.balance = w3.utils.fromWei(balance, "ether");
