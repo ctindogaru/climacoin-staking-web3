@@ -1,7 +1,7 @@
 {
-  "name": "react-webpack",
+  "name": "climacoin-staking-web3",
   "version": "1.0.0",
-  "description": "",
+  "description": "Web3 Staking Platform for Climacoin",
   "main": "index.js",
   "scripts": {
     "serve": "webpack serve --mode development",
