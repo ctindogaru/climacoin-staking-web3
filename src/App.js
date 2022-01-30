@@ -41,6 +41,11 @@ const w3Strings = {
       "https://eth-goerli.alchemyapi.io/v2/rd7h-yzXVEw1K3kk6satHa0rbPii3h7W",
     name: "Goerli",
   },
+  "0x61": {
+    alchemyLink:
+      "https://data-seed-prebsc-1-s1.binance.org:8545",
+    name: "BscTestnet",
+  },
   1: { alchemyLink: "", name: "Mainnet" },
   3: { alchemyLink: "", name: "Ropsten" },
   "2a": { alchemyLink: "", name: "Kovan" },
